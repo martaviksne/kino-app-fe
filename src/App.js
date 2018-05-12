@@ -32,7 +32,7 @@ class App extends Component {
   requireAuth() {
     var theToken = ls.get('kino_jwt');
     if (theToken) {
-      axios.post(config.server+'/verifyToken', {}, {
+      axios.post(config.server+'/api/verifyToken', {}, {
         headers: {
           authorization: "Bearer "+theToken
         }

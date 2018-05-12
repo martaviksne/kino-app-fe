@@ -25,7 +25,7 @@ class Login extends Component {
     this.setState({password: e.target.value});
   }
   checkLogin() {
-    axios.post(config.server+'/authenticate', {
+    axios.post(config.server+'/api/authenticate', {
       username: this.state.username,
       password: this.state.password
     })
