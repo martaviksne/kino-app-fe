@@ -161,7 +161,7 @@ class Dashboard extends Component {
     });
   }
   render() {
-    let addDisabled = (typeof this.state.filmas.find(item => item.editing === true) !== 'undefined');
+    let addDisabled = (typeof this.state.filmas !== 'undefined' && typeof this.state.filmas.find(item => item.editing === true) !== 'undefined');
     return (this.state.fetching ? <div>{'Fetching...'}</div> :
       <div>
         <Header type="admin" logout={this.logout}/>
