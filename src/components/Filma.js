@@ -97,7 +97,7 @@ class Filma extends Component {
       poster,
       frontend
     } = this.props;
-    let addDisabled = (typeof this.state.seansi !== 'undefined' typeof this.state.seansi.find(item => item.editing === true) !== 'undefined');
+    let addDisabled = (typeof this.state.seansi !== 'undefined' && typeof this.state.seansi.find(item => item.editing === true) !== 'undefined');
     return(
       !frontend ?
       <div className="col-6 d-flex">
