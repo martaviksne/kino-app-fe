@@ -49,6 +49,7 @@ class App extends Component {
     }
   }
   render() {
+    console.log('env', process.env.NODE_ENV)
     return (
         <div id="router">
           <Route exact path="/" component={Home} />

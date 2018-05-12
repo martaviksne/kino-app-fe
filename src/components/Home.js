@@ -42,8 +42,8 @@ class Home extends Component {
           </div>
         </div>
       :
-      <div class="d-flex justify-content-center container mt-4">
-        <div class="loadersmall"></div>
+      <div className="d-flex justify-content-center container mt-4">
+        <div className="loadersmall"></div>
       </div>)}
       </div>
     );
