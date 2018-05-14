@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv-keywords": "^3.2.0",
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
+    "concat-cli": "^4.0.0",
+    "concat-files": "^0.1.1",
+    "cra-append-sw": "^2.3.0",
     "local-storage": "^1.4.2",
     "react": "^16.3.2",
     "react-bootstrap": "^0.32.1",
@@ -16,9 +20,10 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run concat-sw && react-scripts start",
+    "build": "react-scripts build && npm run concat-sw build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "concat-sw": "node concat-sw.js"
   }
 }
