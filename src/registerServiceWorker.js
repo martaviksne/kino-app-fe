@@ -8,6 +8,8 @@
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
 
+import config from './config.js';
+
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -21,7 +23,7 @@ const isLocalhost = Boolean(
 let isSubscribed = false;
 let swRegistration = null;
 let pushButton = document.getElementById("push_button");
-const applicationServerPublicKey = 'BCLTW-G1y4n6UMWlf0uVu7e9Xu0asHwZMtLSLJpUK1HrmireV1eoVYEljZ8c14BFvSP2o88gud1_hdOmLfhfpTA';
+const applicationServerPublicKey = 'BL39yyiLpdRhxzvpZYUs7y3XvG887wS2PFjXuw1Q1xOuDcywDWzN3RRYWHr6oeNpqotL9zIVjczC2W3ZcnOScgo';
 
 export default function register() {
   if ('serviceWorker' in navigator) {
@@ -89,6 +91,17 @@ function initializeUI() {
 
     if (isSubscribed) {
       console.log('User IS subscribed.');
+
+      // Send the subscription details to the server using the Fetch API.
+      /* fetch(config.server+'/api/registerPush', {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          subscription: subscription
+        }),
+      }); */
     } else {
       console.log('User is NOT subscribed.');
     }
@@ -221,6 +234,18 @@ function updateSubscriptionOnServer(subscription) {
   if (subscription) {
     console.log('subscription details', JSON.stringify(subscription));
     //subscriptionDetails.classList.remove('is-invisible');
+    fetch(config.server+'/api/sendNotification', {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        subscription: subscription,
+        payload: 'First message',
+        delay: 1000,
+        ttl: 0,
+      }),
+    });
   } else {
     //subscriptionDetails.classList.add('is-invisible');
   }
@@ -229,6 +254,7 @@ function updateSubscriptionOnServer(subscription) {
 export function unregister() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready.then(registration => {
+      console.log('service worker unregistered');
       registration.unregister();
     });
   }

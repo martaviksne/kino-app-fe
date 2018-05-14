@@ -50,15 +50,50 @@ self.addEventListener('pushsubscriptionchange', function(event) {
 });
 
 self.addEventListener('push', function(event) {
-  console.log('[Service Worker] Push Received.');
-  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
-
-  const title = 'Kinoteātris';
-  const options = {
-    body: 'Jauns ziņojums!',
-    icon: './build/icons/icon-144.png',
-    badge: './build/icons/icon-144.png'
+  if (event.data) {
+    console.log('This push event has data: ', event.data.text());
+  } else {
+    console.log('This push event has no data.');
+  }
+  event.waitUntil((e)=>{console.log('something happened', event)});
+  console.log('Received push');
+  let notificationTitle = 'Hello';
+  const notificationOptions = {
+    body: 'Thanks for sending this push msg.',
+    icon: './icons/icon-144.png',
+    badge: './icons/icon-144.png',
+    tag: 'simple-push-demo-notification',
+    data: {
+      url: 'https://developers.google.com/web/fundamentals/getting-started/push-notifications/',
+    },
   };
 
-  event.waitUntil(self.registration.showNotification(title, options));
+  if (event.data) {
+    const dataText = event.data.text();
+    notificationTitle = 'Received Payload';
+    notificationOptions.body = `Push data: '${dataText}'`;
+  }
+
+  event.waitUntil(self.registration.showNotification(
+        notificationTitle, notificationOptions)
+  );
+});
+
+self.addEventListener('notificationclick', function(event) {
+  event.notification.close();
+
+  let clickResponsePromise = Promise.resolve();
+  if (event.notification.data && event.notification.data.url) {
+    clickResponsePromise = clients.openWindow(event.notification.data.url);
+  }
+
+  event.waitUntil(
+    Promise.all([
+      clickResponsePromise
+    ])
+  );
+});
+
+self.addEventListener('notificationclose', function(event) {
+  console.log('notification closed');
 });
