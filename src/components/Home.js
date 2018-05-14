@@ -15,14 +15,11 @@ class Home extends Component {
   }
   componentDidMount() {
     if ('caches' in window) {
-      console.log(caches.match(config.server+'/api/filmas'));
       caches.match(config.server+'/api/filmas').then((response)=> {
         if (response) {
           response.json().then(function updateFromCache(json) {
             //var results = json.query.results;
-            console.log(json);
             json.forEach((item)=> {
-              console.log(fetch(item.poster));
             })
             this.setState({filmas: json, fetching: false})
           }.bind(this));

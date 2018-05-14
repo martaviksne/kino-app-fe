@@ -1,9 +1,6 @@
 var dataCacheName = 'kinoData-v1';
+var applicationServerPublicKey = 'BCLTW-G1y4n6UMWlf0uVu7e9Xu0asHwZMtLSLJpUK1HrmireV1eoVYEljZ8c14BFvSP2o88gud1_hdOmLfhfpTA';
 
-self.addEventListener('activate', function(event) {
-  console.log('wait until clients');
-  event.waitUntil(self.clients.claim());
-});
 
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
@@ -35,4 +32,33 @@ self.addEventListener('fetch', function(e) {
       })
     );
   }
+});
+
+self.addEventListener('pushsubscriptionchange', function(event) {
+  console.log('[Service Worker]: \'pushsubscriptionchange\' event fired.');
+  const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+  event.waitUntil(
+    self.registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: applicationServerKey
+    })
+    .then(function(newSubscription) {
+      // TODO: Send to application server
+      console.log('[Service Worker] New subscription: ', newSubscription);
+    })
+  );
+});
+
+self.addEventListener('push', function(event) {
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+  const title = 'Kinoteātris';
+  const options = {
+    body: 'Jauns ziņojums!',
+    icon: './build/icons/icon-144.png',
+    badge: './build/icons/icon-144.png'
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
 });
