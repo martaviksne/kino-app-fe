@@ -1,5 +1,10 @@
 var dataCacheName = 'kinoData-v1';
 
+self.addEventListener('activate', function(event) {
+  console.log('wait until clients');
+  event.waitUntil(self.clients.claim());
+});
+
 self.addEventListener('fetch', function(e) {
   console.log('[Service Worker] Fetch', e.request.url);
   if (e.request.url.indexOf(dataUrl) > -1) {
