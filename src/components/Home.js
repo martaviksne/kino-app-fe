@@ -14,20 +14,43 @@ class Home extends Component {
     }
   }
   componentDidMount() {
-    axios.get(config.server+'/api/filmas')
-    .then((response) => {
-      let theMovies = response.data;
-      theMovies.forEach((item)=>{
-        item.id = item._id;
-        item.seansi.forEach((seanss)=>{
-          seanss.id = seanss._id;
-        })
-      });
-      this.setState({filmas: theMovies, fetching: false})
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    if ('caches' in window) {
+      console.log(caches.match(config.server+'/api/filmas'));
+      caches.match(config.server+'/api/filmas').then((response)=> {
+        if (response) {
+          response.json().then(function updateFromCache(json) {
+            //var results = json.query.results;
+            console.log(json);
+            json.forEach((item)=> {
+              console.log(fetch(item.poster));
+            })
+            this.setState({filmas: json, fetching: false})
+          /* json.forEach((item)=>{
+            item.id = item._id;
+            item.seansi.forEach((seanss)=>{
+              seanss.id = seanss._id;
+            })
+          }); */
+          }.bind(this));
+        } else {
+          console.log('nope');
+          axios.get(config.server+'/api/filmas')
+          .then((response) => {
+            let theMovies = response.data;
+            theMovies.forEach((item)=>{
+              item.id = item._id;
+              item.seansi.forEach((seanss)=>{
+                seanss.id = seanss._id;
+              })
+            });
+            this.setState({filmas: theMovies, fetching: false})
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      })
+    }
   }
   render() {
     const { fetching } = this.state;
