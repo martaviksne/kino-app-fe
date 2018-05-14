@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "ajv-keywords": "^3.2.0",
+    "array.prototype.fill": "^1.0.2",
     "axios": "^0.18.0",
     "bootstrap": "^3.3.7",
     "concat-cli": "^4.0.0",

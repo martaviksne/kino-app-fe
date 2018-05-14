@@ -9,12 +9,6 @@ import axios from 'axios';
 import config from './config.js';
 //import createBrowserHistory from './history';
 
-/* polyfills.js */
-
-import 'core-js/fn/array/find';
-import 'core-js/fn/array/includes';
-import 'core-js/fn/number/is-nan';
-
 class App extends Component {
   constructor(props) {
     super(props);
