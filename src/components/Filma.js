@@ -171,7 +171,7 @@ class Filma extends Component {
             <div className="row mt-4">
               <div className="col">
                 <h6 className="">{'Seansi'}</h6>
-                {(this.state.seansi.map((item, i) =>
+                {(this.state.seansi && this.state.seansi.map((item, i) =>
                   <Seanss
                     key={i}
                     {...item}

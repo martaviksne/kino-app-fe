@@ -6,9 +6,9 @@ import logo from '../img/kinoteatris_white.svg';
 
 class Header extends Component {
   render() {
-    const { type, logout } = this.props;
+    const { type, logout, path } = this.props;
     return(
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark front-header">
+      <nav style={{zIndex: (path && path === '/scan' ? 6 : 1)}} className="navbar navbar-expand-lg navbar-dark bg-dark front-header">
         <div className="container w-100">
           <div className="row w-100">
             <img alt={'Kinoteātris'} className="the-logo mr-2" src={logo}/>
@@ -23,7 +23,11 @@ class Header extends Component {
               </ul>
             : <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" style={{cursor:"pointer"}} to={'/scan'}>{'Skenēt biļeti'}</Link>
+                  {(path && path === '/scan' ?
+                    <Link className="nav-link" style={{cursor:"pointer"}} to={'/'}>{'Atpakaļ uz sākumu'}</Link>
+                    :
+                    <Link className="nav-link" style={{cursor:"pointer"}} to={'/scan'}>{'Skenēt biļeti'}</Link>
+                  )}
                 </li>
               </ul> )}
           </div>

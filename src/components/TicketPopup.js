@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './bootstrap.css';
 import config from '../config.js';
 var QRCode = require('qrcode.react');
-var Recaptcha = require('react-recaptcha');
+//var Recaptcha = require('react-recaptcha');
 
 class TicketPopup extends Component {
   formatDate(date) {
@@ -38,8 +38,7 @@ class TicketPopup extends Component {
       ticketCode,
       seanssId,
       movieId,
-      buying,
-      captcha
+      buying
     } = this.props;
     return(
       <div className="modal fade show" style={{display:(popupClosed ? 'none' : 'block')}} tabIndex="-1" role="dialog">
@@ -62,13 +61,6 @@ class TicketPopup extends Component {
                       <input onChange={(e)=>{changeTicketCount(e.target.value)}} type="number" className="form-control" value={ticketCount} id="inputAddress" min={1} max={40}/>
                     </div>
                   </div>
-                  <div className="form-row">
-                    <Recaptcha
-                      ref="recaptcha"
-                      sitekey="6LdTVlkUAAAAADqWZgQePqjmY7fiqUrY9kkZ1AaR"
-                      verifyCallback={captcha}
-                    />
-                  </div>
                 </form>
               </div>
               :
@@ -87,7 +79,7 @@ class TicketPopup extends Component {
               )}
             </div>
             <div className="modal-footer">
-              {(!ticketBought && !ticketCode && <button disabled={buying} onClick={()=>{
+              {(!ticketBought && !ticketCode && <button onClick={()=>{
                 this.props.buyTicket(
                   movieName,
                   movieDate,
@@ -97,7 +89,7 @@ class TicketPopup extends Component {
                   seanssId,
                   movieId)
               }} type="button" className="btn btn-primary mr-auto">{`Pirkt - ${parseFloat(moviePrice * ticketCount).toFixed(2)} €`}</button>)}
-              <button disabled={buying} onClick={this.props.togglePopup} type="button" className="btn btn-secondary" data-dismiss="modal">{((!ticketBought && !ticketCode) ? 'Atcelt' : 'Aizvērt')}</button>
+              <button onClick={this.props.togglePopup} type="button" className="btn btn-secondary" data-dismiss="modal">{((!ticketBought && !ticketCode) ? 'Atcelt' : 'Aizvērt')}</button>
             </div>
           </div>
         </div>

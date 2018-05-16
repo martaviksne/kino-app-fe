@@ -29,7 +29,6 @@ class Home extends Component {
     this.togglePopup = this.togglePopup.bind(this);
     this.changeTicketCount = this.changeTicketCount.bind(this);
     this.buyTicket = this.buyTicket.bind(this);
-    this.captchaVerify = this.captchaVerify.bind(this);
   }
   togglePopup() {
     document.getElementsByTagName("body")[0].classList.remove('modal-open');
@@ -55,9 +54,6 @@ class Home extends Component {
   }
   changeTicketCount(e) {
     this.setState({ticketCount: e});
-  }
-  captchaVerify(e) {
-    this.setState({buying: false});
   }
   buyTicket(movieName, movieDate, moviePlace, moviePrice, seats, seanssId, movieId) {
     this.setState({buying: true});
@@ -149,7 +145,6 @@ class Home extends Component {
         seanssId={this.state.seanssId}
         movieId={this.state.movieId}
         buying={this.state.buying}
-        captcha={this.captchaVerify}
       />
     {(!this.state.popupClosed && <div className="modal-backdrop fade show"></div>)}
       </div>
