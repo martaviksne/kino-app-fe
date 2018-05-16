@@ -1,0 +1,23 @@
+.pull-left-sm {
+    float: right !important;
+    margin-top:10px;
+}
+.modal-open {
+  padding-right:15px;
+}
+@media (max-width: 576px) {
+  .card-text {
+    font-size:14px;
+  }
+  .pull-left-sm {
+        float: left !important;
+        margin-top:0px;
+        padding-left:0px !important;
+  }
+  .seanssText {
+    margin-bottom:10px;
+  }
+  .seanssText.last {
+    margin-bottom:4px;
+  }
+}

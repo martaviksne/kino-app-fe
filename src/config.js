@@ -5,6 +5,12 @@ const config = {
     "Aprīlis", "Maijs", "Jūnijs", "Jūlijs",
     "Augusts", "Septembris", "Oktobris",
     "Novembris", "Decembris"
+  ],
+  monthNames2: [
+    "Janvārī", "Februārī", "Martā",
+    "Aprīlī", "Maijā", "Jūnijā", "Jūlijā",
+    "Augustā", "Septembrī", "Oktobrī",
+    "Novembrī", "Decembrī"
   ]
 }
 

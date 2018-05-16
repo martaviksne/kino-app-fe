@@ -32,7 +32,11 @@ class Seanss extends Component {
       removeSeanss,
       saveSeanss,
       deleteSeanss,
-      editing
+      editing,
+      frontend,
+      openPopup,
+      movieName,
+      movieId
     } = this.props;
     let theDate = new Date(date);
     return(
@@ -80,21 +84,27 @@ class Seanss extends Component {
         </div>
       </form>
       :
-      <div className="row mb-2">
-        <div className="col-5">
-          <div className="small-text">{'Datums un laiks'}</div>
-          {this.formatDate(theDate)}
-        </div>
-        <div className="col-2">
-          <div className="small-text">{'Auditorija'}</div>
-          {place}
-        </div>
-        <div className="col-2">
-          <div className="small-text">{'Cena'}</div>
-          {`${parseFloat(price).toFixed(2)} €`}
-        </div>
-        <div className="col-3">
-          <div onClick={()=>deleteSeanss(id)} className="float-right mt-3 btn btn-sm btn-link" style={{color: '#dc3545'}}>Dzēst</div>
+      <div>
+        <hr></hr>
+        <div className="row mb-2">
+          <div className="col-xl-5 col-lg-4 col-md-4 col-sm-4 col-12">
+            <div className="small-text">{'Datums un laiks'}</div>
+            <div className="seanssText">{this.formatDate(theDate)}</div>
+          </div>
+          <div className="col-xl-2 col-lg-3 col-md-3 col-sm-3 col-12">
+            <div className="small-text">{'Auditorija'}</div>
+            <div className="seanssText">{place}</div>
+          </div>
+          <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
+            <div className="small-text">{'Cena'}</div>
+            <div className="seanssText last">{`${parseFloat(price).toFixed(2)} €`}</div>
+          </div>
+          <div className="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+            {(!frontend ?
+            <div onClick={()=>deleteSeanss(id)} className="float-right mt-3 btn btn-sm btn-link" style={{color: '#dc3545'}}>Dzēst</div>
+            : <div onClick={()=>openPopup(movieName,place,price,date,id,movieId)} className="pull-left-sm btn btn-sm btn-link" >Pirkt biļeti</div>
+            )}
+          </div>
         </div>
       </div>
     )

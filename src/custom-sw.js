@@ -1,5 +1,5 @@
 var dataCacheName = 'kinoData-v1';
-var applicationServerPublicKey = 'BCLTW-G1y4n6UMWlf0uVu7e9Xu0asHwZMtLSLJpUK1HrmireV1eoVYEljZ8c14BFvSP2o88gud1_hdOmLfhfpTA';
+var applicationServerPublicKey = 'BL39yyiLpdRhxzvpZYUs7y3XvG887wS2PFjXuw1Q1xOuDcywDWzN3RRYWHr6oeNpqotL9zIVjczC2W3ZcnOScgo';
 
 
 self.addEventListener('fetch', function(e) {
@@ -50,12 +50,6 @@ self.addEventListener('pushsubscriptionchange', function(event) {
 });
 
 self.addEventListener('push', function(event) {
-  if (event.data) {
-    console.log('This push event has data: ', event.data.text());
-  } else {
-    console.log('This push event has no data.');
-  }
-  event.waitUntil((e)=>{console.log('something happened', event)});
   console.log('Received push');
   let notificationTitle = 'Hello';
   const notificationOptions = {

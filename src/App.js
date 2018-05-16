@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import './App.css';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
+import ScanTicket from './components/ScanTicket';
 import ls from 'local-storage';
 import axios from 'axios';
 import config from './config.js';
@@ -49,10 +49,10 @@ class App extends Component {
     }
   }
   render() {
-    console.log('env', process.env.NODE_ENV)
     return (
         <div id="router">
           <Route exact path="/" component={Home} />
+          <Route exact path="/scan" component={ScanTicket} />
           <Route exact path="/admin" render={()=>(this.state.loggedIn ? <Redirect to="/dashboard" /> : <Login />)} />
           <Route exact path="/dashboard" render={()=>(this.state.loggedIn ? <Dashboard /> : <Redirect to="/admin" />)} />
         </div>

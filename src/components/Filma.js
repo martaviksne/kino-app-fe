@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import config from '../config.js';
+import './Home.css';
 import Seanss from './Seanss';
 import axios from 'axios';
 
@@ -95,7 +96,8 @@ class Filma extends Component {
       genre,
       description,
       poster,
-      frontend
+      frontend,
+      openPopup
     } = this.props;
     let addDisabled = (typeof this.state.seansi !== 'undefined' && typeof this.state.seansi.find(item => item.editing === true) !== 'undefined');
     return(
@@ -187,16 +189,16 @@ class Filma extends Component {
         </div>
       </div>
       :
-      <div className="col-6 d-flex">
+      <div className="col-lg-6 col-md-12 col-sm-12 d-flex">
         <div className="card mb-4 p-2 w-100">
           <div className="card-body">
             <div className="row">
                 {(poster &&
-                  <div className="col-auto">
-                    <img className="card-img-bottom card-img-top" style={{width:"150px"}} src={config.server+'/'+poster} alt={name}/>
+                  <div className="col-lg-4 col-md-4 col-sm-4 col-4">
+                    <img className="card-img-bottom card-img-top" style={{maxWidth:"150px", width:'100%'}} src={config.server+'/'+poster} alt={name}/>
                   </div>
                 )}
-                <div className="col">
+                <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                     <div className="small-text">{'Nosaukums'}</div>
                     <h5 className="card-text">{name}</h5>
                     <div className="small-text">{'Žanrs'}</div>
@@ -207,6 +209,21 @@ class Filma extends Component {
                     <p className="card-text">{description}</p>
                 </div>
             </div>
+            {(this.state.seansi.length > 0 &&
+            <div className="row mt-4">
+              <div className="col">
+                <h6 className="">{'Seansi'}</h6>
+                {(this.state.seansi.map((item, i) =>
+                  <Seanss
+                    key={i}
+                    {...item}
+                    movieName={name}
+                    movieId={id}
+                    openPopup={openPopup}
+                    frontend={true}/>
+                ))}
+              </div>
+            </div> )}
           </div>
         </div>
       </div>

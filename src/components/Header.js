@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './bootstrap.css';
 import './Dashboard.css';
 import logo from '../img/kinoteatris_white.svg';
@@ -14,10 +15,15 @@ class Header extends Component {
             <span className="navbar-text">
               {(type === 'admin' ? 'Administrācijas panelis' : 'Kinoteātris')}
             </span>
-            {(type === 'admin' &&
+            {(type === 'admin' ?
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <div className="nav-link" style={{cursor:"pointer"}} onClick={logout}>{'Izrakstīties'}</div>
+                </li>
+              </ul>
+            : <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" style={{cursor:"pointer"}} to={'/scan'}>{'Skenēt biļeti'}</Link>
                 </li>
               </ul> )}
           </div>
