@@ -10,6 +10,7 @@
     "concat-files": "^0.1.1",
     "core-js": "^2.5.6",
     "es6-set": "^0.1.5",
+    "html-inline": "^1.2.0",
     "jquery": "^3.3.1",
     "local-storage": "^1.4.2",
     "qrcode.react": "^0.8.0",
@@ -27,9 +28,18 @@
   },
   "scripts": {
     "start": "npm run concat-sw && react-scripts start",
-    "build": "react-scripts build && npm run concat-sw build",
+    "build": "react-scripts build && npm run concat-sw build && npm run inline-assets",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "concat-sw": "node concat-sw.js"
+    "concat-sw": "node concat-sw.js",
+    "inline-assets": "html-inline -i ./build/index.html -o ./build/index2.html --ignore-images --ignore-links && npm run cc",
+    "cc": "cp ./build/index2.html ./build/index.html && rm ./build/index2.html"
+  },
+  "devDependencies": {
+    "file-contents": "^1.0.1",
+    "find-in-files": "^0.5.0",
+    "inline-html": "^0.2.4",
+    "replace": "^1.0.0",
+    "replace-in-file": "^3.4.0"
   }
 }
