@@ -8,7 +8,7 @@ class ScanTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: '',
+      code: 'rthtyh',
       codeFound: false,
       searching: true,
       ticketFound: false,
@@ -68,7 +68,7 @@ class ScanTicket extends Component {
       /* mediaStream.getTracks()[0].stop();
       document.getElementById('qr-canvas').remove();
       this.searchTicket(); */
-      document.getElementById('qr-canvas').srcObject = mediaStream;
+      //document.getElementById('qr-canvas').srcObject = mediaStream;
       new QrScanner(document.getElementById('qr-canvas'), result => {
         this.setState({code: result, codeFound: true});
         mediaStream.getTracks()[0].stop();
@@ -90,7 +90,7 @@ class ScanTicket extends Component {
           (searching ?
           <div className="container">
             <div className="row justify-content-center">
-              <div className="card mb-4 mt-4 p-2 w-100 col-4">
+              <div className="card mb-4 mt-4 p-2 ml-4 mr-4 w-100 col-lg-4 col-md-8 col-sm-10 col-xs-10">
                 <div className="card-body">
                   <div className="row justify-content-center">
                     <p>{'Meklē biļeti...'}</p>
@@ -106,7 +106,7 @@ class ScanTicket extends Component {
           (ticketFound ?
           <div className="container">
             <div className="row justify-content-center">
-              <div className="card mb-4 mt-4 p-2 w-100 col-4">
+              <div className="card mb-4 mt-4 p-2 w-100 col-lg-4 col-md-8 col-sm-10">
                 <div className="card-body">
                   <div className="row justify-content-center">
                     <h4>{'Biļete atrasta'}</h4>
