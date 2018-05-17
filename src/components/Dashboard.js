@@ -30,6 +30,7 @@ class Dashboard extends Component {
     this.deleteMovie = this.deleteMovie.bind(this);
     this.deleteTicket = this.deleteTicket.bind(this);
     this.editTicket = this.editTicket.bind(this);
+    this.movieMessage = this.movieMessage.bind(this);
   }
   componentWillMount() {
     this.getMovies();
@@ -38,6 +39,39 @@ class Dashboard extends Component {
   componentDidMount() {
     document.getElementById('push_button').remove();
     document.getElementById('add_to_home').remove();
+  }
+  movieMessage(name, type) {
+    axios.get(config.server+'/api/subscribers')
+    .then((response)=>{
+      let promiseArray = [];
+      response.data.forEach((sub)=>{
+        console.log('new sub', sub);
+        let pr = new Promise((resolve, reject) => {
+          resolve(sub.subscription);
+          axios.post(config.server+'/api/sendNotification', {
+            ttl: 0,
+            payload: JSON.stringify(
+              {
+                header: (type === 1 ? 'Jauna filma kinoteātrī' : 'Filma vairs nav pieejama'),
+                text: name
+              }
+            ),
+            subscription: sub.subscription
+          })
+          .then((response)=>{
+            resolve(response)
+          })
+          .catch((err)=>{
+            resolve(err)
+          })
+        })
+        promiseArray.push(pr);
+      });
+      Promise.all(promiseArray)
+      .then(values => {
+        console.log(values);
+      });
+    })
   }
   getMovies() {
     axios.get(config.server+'/api/filmas')
@@ -105,6 +139,7 @@ class Dashboard extends Component {
         axios.delete(config.server+'/api/filmas/'+id)
         .then((response) => {
           this.getMovies();
+          this.movieMessage(movieArray[movieArray.findIndex(item => item.id === id)].name, 0);
         })
         .catch(function (error) {
           console.log('error', error);
@@ -117,6 +152,7 @@ class Dashboard extends Component {
       axios.delete(config.server+'/api/filmas/'+id)
       .then((response) => {
         this.getMovies();
+        this.movieMessage(movieArray[movieArray.findIndex(item => item.id === id)].name, 0);
       })
       .catch(function (error) {
         console.log('error', error);
@@ -171,12 +207,14 @@ class Dashboard extends Component {
         })
         .then((response) => {
           this.getMovies();
+          this.movieMessage(filma.name, 1);
         })
         .catch(function (error) {
           console.log('error', error);
         });
       } else {
         this.getMovies();
+        this.movieMessage(filma.name, 1);
       }
       console.log(response);
     })

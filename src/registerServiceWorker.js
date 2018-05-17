@@ -9,6 +9,7 @@
 // This link also includes instructions on opting out of this behavior.
 
 import config from './config.js';
+import axios from 'axios';
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -91,17 +92,6 @@ function initializeUI() {
 
     if (isSubscribed) {
       console.log('User IS subscribed.');
-
-      // Send the subscription details to the server using the Fetch API.
-      /* fetch(config.server+'/api/registerPush', {
-        method: 'post',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          subscription: subscription
-        }),
-      }); */
     } else {
       console.log('User is NOT subscribed.');
     }
@@ -152,6 +142,11 @@ function updateBtn() {
 function unsubscribeUser() {
   swRegistration.pushManager.getSubscription()
   .then(function(subscription) {
+    console.log('unsubscribe', subscription);
+    axios.post(config.server+'/api/findSubscription',{subscription:JSON.stringify(subscription)})
+    .then((response)=> {
+      console.log(response);
+    })
     if (subscription) {
       return subscription.unsubscribe();
     }
@@ -232,20 +227,15 @@ function updateSubscriptionOnServer(subscription) {
   // TODO: Send subscription to application server
 
   if (subscription) {
-    console.log('subscription details', JSON.stringify(subscription));
-    //subscriptionDetails.classList.remove('is-invisible');
-    fetch(config.server+'/api/sendNotification', {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        subscription: subscription,
-        payload: 'First message',
-        delay: 1000,
-        ttl: 0,
-      }),
+    console.log('subscription details', JSON.stringify(subscription), subscription);
+
+    axios.post(config.server+'/api/subscribers',
+      {subscription: JSON.stringify(subscription)}
+    )
+    .then((response) => {
+      console.log('sub response', response);
     });
+
   } else {
     //subscriptionDetails.classList.add('is-invisible');
   }

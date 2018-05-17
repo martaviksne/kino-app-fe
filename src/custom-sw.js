@@ -51,21 +51,20 @@ self.addEventListener('pushsubscriptionchange', function(event) {
 
 self.addEventListener('push', function(event) {
   console.log('Received push');
-  let notificationTitle = 'Hello';
   const notificationOptions = {
-    body: 'Thanks for sending this push msg.',
     icon: './icons/icon-144.png',
     badge: './icons/icon-144.png',
-    tag: 'simple-push-demo-notification',
     data: {
-      url: 'https://developers.google.com/web/fundamentals/getting-started/push-notifications/',
+      url: 'https://kino.linnuu.com',
     },
   };
 
+  let notificationTitle = '';
+
   if (event.data) {
-    const dataText = event.data.text();
-    notificationTitle = 'Received Payload';
-    notificationOptions.body = `Push data: '${dataText}'`;
+    const dataText = JSON.parse(event.data.text());
+    notificationTitle = dataText.header;
+    notificationOptions.body = dataText.text;
   }
 
   event.waitUntil(self.registration.showNotification(
@@ -86,8 +85,4 @@ self.addEventListener('notificationclick', function(event) {
       clickResponsePromise
     ])
   );
-});
-
-self.addEventListener('notificationclose', function(event) {
-  console.log('notification closed');
 });

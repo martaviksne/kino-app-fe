@@ -82,6 +82,7 @@ class ScanTicket extends Component {
     let seanssInfo = 'undefined';
     const { code, codeFound, searching, ticketFound } = this.state;
     if (!this.state.searching && ticketFound) seanssInfo = this.state.movie.seansi.find((item)=>item._id === this.state.seanss);
+    console.log(seanssInfo, this.state.seanss);
     return(
       <div className="app-background">
         <Header path={this.props.location.pathname}/>

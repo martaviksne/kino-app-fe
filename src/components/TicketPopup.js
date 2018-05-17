@@ -37,8 +37,7 @@ class TicketPopup extends Component {
       ticketBought,
       ticketCode,
       seanssId,
-      movieId,
-      buying
+      movieId
     } = this.props;
     return(
       <div className="modal fade show" style={{display:(popupClosed ? 'none' : 'block')}} tabIndex="-1" role="dialog">
