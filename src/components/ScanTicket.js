@@ -65,7 +65,7 @@ class ScanTicket extends Component {
   componentDidMount() {
     navigator.mediaDevices.getUserMedia({video: { facingMode: "environment" }, audio: false})
     .then(mediaStream => {
-      mediaStream.getTracks()[0].stop();
+      //mediaStream.getTracks()[0].stop();
       document.getElementById('qr-canvas').srcObject = mediaStream;
       new QrScanner(document.getElementById('qr-canvas'), result => {
         this.setState({code: result, codeFound: true});
