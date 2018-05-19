@@ -8,7 +8,7 @@ class ScanTicket extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      code: 'rthtyh',
+      code: '',
       codeFound: false,
       searching: true,
       ticketFound: false,
@@ -65,10 +65,8 @@ class ScanTicket extends Component {
   componentDidMount() {
     navigator.mediaDevices.getUserMedia({video: { facingMode: "environment" }, audio: false})
     .then(mediaStream => {
-      /* mediaStream.getTracks()[0].stop();
-      document.getElementById('qr-canvas').remove();
-      this.searchTicket(); */
-      //document.getElementById('qr-canvas').srcObject = mediaStream;
+      mediaStream.getTracks()[0].stop();
+      document.getElementById('qr-canvas').srcObject = mediaStream;
       new QrScanner(document.getElementById('qr-canvas'), result => {
         this.setState({code: result, codeFound: true});
         mediaStream.getTracks()[0].stop();
