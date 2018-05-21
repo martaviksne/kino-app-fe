@@ -76,13 +76,13 @@ function urlB64ToUint8Array(base64String) {
   return outputArray;
 }
 
-function initializeUI() {
+function initializeUI(swRegistration) {
   pushButton.addEventListener('click', function() {
     pushButton.disabled = true;
     if (isSubscribed) {
-      unsubscribeUser();
+      unsubscribeUser(swRegistration);
     } else {
-      subscribeUser();
+      subscribeUser(swRegistration);
     }
   });
   // Set the initial subscription value
@@ -100,7 +100,7 @@ function initializeUI() {
   });
 }
 
-function subscribeUser() {
+function subscribeUser(swRegistration) {
   const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
   swRegistration.pushManager.subscribe({
     userVisibleOnly: true,
@@ -139,7 +139,7 @@ function updateBtn() {
   pushButton.disabled = false;
 }
 
-function unsubscribeUser() {
+function unsubscribeUser(swRegistration) {
   swRegistration.pushManager.getSubscription()
   .then(function(subscription) {
     console.log('unsubscribe', subscription);
@@ -169,7 +169,7 @@ function registerValidSW(swUrl) {
     .register(swUrl)
     .then(registration => {
       swRegistration = registration;
-      initializeUI();
+      initializeUI(swRegistration);
       console.log('registration', registration);
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
